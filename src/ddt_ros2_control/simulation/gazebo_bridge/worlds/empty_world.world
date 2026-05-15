@@ -1,6 +1,15 @@
 <?xml version="1.0" ?>
 <sdf version="1.6">
   <world name="default">
+    <!-- Publish all model poses: ros2 topic echo /model_states -->
+    <plugin name="gazebo_ros_state" filename="libgazebo_ros_state.so">
+      <ros>
+        <remapping>model_states:=model_states</remapping>
+        <remapping>link_states:=link_states</remapping>
+      </ros>
+      <update_rate>10.0</update_rate>
+    </plugin>
+
     <physics type="ode">
       <max_step_size>0.002</max_step_size>
       <real_time_update_rate>500</real_time_update_rate>
