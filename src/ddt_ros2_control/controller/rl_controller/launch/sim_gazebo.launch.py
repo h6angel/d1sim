@@ -121,6 +121,25 @@ def launch_setup(context, *args, **kwargs):
             ns + "/controller_manager",
         ],
     )
+
+    obstacle_cloud_config = os.path.join(
+        get_package_share_directory("gazebo_obstacle_cloud"),
+        "config",
+        "obstacle_cloud.yaml",
+    )
+    obstacle_cloud_node = Node(
+        package="gazebo_obstacle_cloud",
+        executable="obstacle_cloud_node",
+        parameters=[
+            obstacle_cloud_config,
+            {
+                "use_sim_time": True,
+                "robot_model_name": robot_name + "_description",
+            },
+        ],
+        output="screen",
+    )
+
     nodes = [
         robot_state_pub_node,
         gazebo,
@@ -128,6 +147,7 @@ def launch_setup(context, *args, **kwargs):
         joint_state_broadcaster_spawner,
         imu_sensor_broadcaster_spawner,
         rl_controller_spawner,
+        obstacle_cloud_node,
     ]
 
     return nodes

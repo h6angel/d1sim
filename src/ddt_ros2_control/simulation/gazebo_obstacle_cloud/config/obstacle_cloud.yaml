@@ -1,0 +1,14 @@
+obstacle_cloud_node:
+  ros__parameters:
+    model_states_topic: "/model_states"
+    cloud_topic: "/gazebo_obstacles"
+    odom_topic: "/odom"
+    obstacle_name_prefix: "obstacle_"
+    robot_model_name: "d1h_description"
+    frame_id: "world"
+    child_frame_id: "base_link"
+    box_size_x: 1.0
+    box_size_y: 1.0
+    box_size_z: 1.0
+    sample_step: 0.1
+    publish_rate_hz: 10.0
