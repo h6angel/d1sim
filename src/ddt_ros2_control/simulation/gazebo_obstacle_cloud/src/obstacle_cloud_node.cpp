@@ -108,7 +108,13 @@ sensor_msgs::msg::PointCloud2 ObstacleCloudNode::buildObstacleCloud(
     double sx = box_size_x_;
     double sy = box_size_y_;
     double sz = box_size_z_;
-    resolveBoxSize(msg.name[i], sx, sy, sz);
+    if (!resolveBoxSize(msg.name[i], sx, sy, sz)) {
+      RCLCPP_WARN_ONCE(
+        this->get_logger(),
+        "Model '%s' has no size in name (expected obstacle_<dx>_<dy>_<dz>_... in dm); "
+        "using default box %.2f x %.2f x %.2f m",
+        msg.name[i].c_str(), sx, sy, sz);
+    }
     sampleAxisAlignedBox(msg.pose[i], sx, sy, sz, xyz);
   }
 
