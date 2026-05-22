@@ -2,6 +2,7 @@
 
 #include <algorithm>
 #include <chrono>
+#include <regex>
 
 namespace gazebo_obstacle_cloud
 {
@@ -54,12 +55,31 @@ ObstacleCloudNode::ObstacleCloudNode(const rclcpp::NodeOptions & options)
     robot_model_name_.c_str(), obstacle_name_prefix_.c_str());
 }
 
-void ObstacleCloudNode::sampleAxisAlignedBox(
-  const geometry_msgs::msg::Pose & pose, std::vector<float> & points) const
+bool ObstacleCloudNode::resolveBoxSize(
+  const std::string & model_name, double & size_x, double & size_y, double & size_z) const
 {
-  const double hx = box_size_x_ * 0.5;
-  const double hy = box_size_y_ * 0.5;
-  const double hz = box_size_z_ * 0.5;
+  // obstacle_<sx>_<sy>_<sz>_... with sizes in decimeters (e.g. 240 -> 24.0 m)
+  static const std::regex size_re(R"(^obstacle_(\d+)_(\d+)_(\d+)_)");
+  std::smatch match;
+  if (std::regex_search(model_name, match, size_re)) {
+    size_x = std::stod(match[1].str()) * 0.1;
+    size_y = std::stod(match[2].str()) * 0.1;
+    size_z = std::stod(match[3].str()) * 0.1;
+    return true;
+  }
+  size_x = box_size_x_;
+  size_y = box_size_y_;
+  size_z = box_size_z_;
+  return false;
+}
+
+void ObstacleCloudNode::sampleAxisAlignedBox(
+  const geometry_msgs::msg::Pose & pose, double size_x, double size_y, double size_z,
+  std::vector<float> & points) const
+{
+  const double hx = size_x * 0.5;
+  const double hy = size_y * 0.5;
+  const double hz = size_z * 0.5;
   const double cx = pose.position.x;
   const double cy = pose.position.y;
   const double cz = pose.position.z;
@@ -85,7 +105,11 @@ sensor_msgs::msg::PointCloud2 ObstacleCloudNode::buildObstacleCloud(
     if (msg.name[i].rfind(obstacle_name_prefix_, 0) != 0) {
       continue;
     }
-    sampleAxisAlignedBox(msg.pose[i], xyz);
+    double sx = box_size_x_;
+    double sy = box_size_y_;
+    double sz = box_size_z_;
+    resolveBoxSize(msg.name[i], sx, sy, sz);
+    sampleAxisAlignedBox(msg.pose[i], sx, sy, sz, xyz);
   }
 
   const size_t point_count = xyz.size() / 3;

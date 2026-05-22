@@ -26,7 +26,9 @@ private:
   sensor_msgs::msg::PointCloud2 buildObstacleCloud(
     const gazebo_msgs::msg::ModelStates & msg, const rclcpp::Time & stamp) const;
   void sampleAxisAlignedBox(
-    const geometry_msgs::msg::Pose & pose, std::vector<float> & points) const;
+    const geometry_msgs::msg::Pose & pose, double size_x, double size_y, double size_z,
+    std::vector<float> & points) const;
+  bool resolveBoxSize(const std::string & model_name, double & size_x, double & size_y, double & size_z) const;
 
   rclcpp::Subscription<gazebo_msgs::msg::ModelStates>::SharedPtr model_states_sub_;
   rclcpp::Publisher<sensor_msgs::msg::PointCloud2>::SharedPtr cloud_pub_;

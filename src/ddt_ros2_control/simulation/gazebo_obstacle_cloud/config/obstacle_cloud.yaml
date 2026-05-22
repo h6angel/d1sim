@@ -10,5 +10,5 @@ obstacle_cloud_node:
     box_size_x: 1.0
     box_size_y: 1.0
     box_size_z: 1.0
-    sample_step: 0.1
+    sample_step: 0.15
     publish_rate_hz: 10.0

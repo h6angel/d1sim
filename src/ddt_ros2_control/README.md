@@ -73,7 +73,8 @@ ros2 launch rl_controller sim_webots.launch.py robot:=d1 terrain:=empty_world
 ```
 - Gazebo 仿真：
 ```bash
-ros2 launch rl_controller sim_gazebo.launch.py robot:=d1h # d1暂时加载不出来
+ros2 launch rl_controller sim_gazebo.launch.py  # 默认 d1h + training_arena（围墙/走廊/迷宫）
+ros2 launch rl_controller sim_gazebo.launch.py world:=empty_world.world  # 简单三个障碍
 ```
 - Mujoco 仿真：
 在仿真`d1`时，需要手动将`d1h_description`中的`meshes`复制到`d1_description`中，并且修改`d1_description/CMakeLists.txt`中，将meshes注释取消。然后重新编译d1_description
