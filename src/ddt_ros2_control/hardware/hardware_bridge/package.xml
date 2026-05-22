@@ -3,7 +3,7 @@
 <package format="3">
   <name>hardware_bridge</name>
   <version>0.0.0</version>
-  <description>for ros2 control and tita ros2 control bridge</description>
+  <description>ros2_control hardware bridge for d1h (via tita_robot driver)</description>
   <maintainer email="liukexin@directdrivetech.com">lkx</maintainer>
   <license>Apache-2.0</license>
 
@@ -16,7 +16,7 @@
   <depend>pluginlib</depend>
   <depend>controller_manager</depend>
   <depend>tita_robot</depend>
-  <!-- <depend>tita_description</depend> -->
+  <depend>d1h_description</depend>
   <!-- <depend>hw_broadcaster</depend> -->
 
   <build_depend>hardware_interface</build_depend>

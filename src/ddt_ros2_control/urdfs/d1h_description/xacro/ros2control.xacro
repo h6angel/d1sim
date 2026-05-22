@@ -22,11 +22,6 @@
         </sensor>
       </gazebo>
 
-      <xacro:if value="${hw_env == 'webots'}">
-        <webots>
-          <plugin type="webots_ros2_control::Ros2Control" />
-        </webots>
-      </xacro:if>
       <xacro:if value="${hw_env == 'gazebo'}">
         <gazebo>
           <is_static>true</is_static>
@@ -43,10 +38,6 @@
 
     <ros2_control name="${hw_env}Bridge" type="system">
       <hardware>
-        <xacro:if value="${hw_env == 'webots'}">
-          <plugin>tita_webots_ros2_control::WebotsBridge</plugin>
-          <!-- <plugin>webots_ros2_control::Ros2ControlSystem</plugin> -->
-        </xacro:if>
         <xacro:if value="${hw_env == 'gazebo'}">
           <plugin>usr_gazebo_ros2_control/GazeboBridge</plugin>
         </xacro:if>

@@ -67,13 +67,10 @@ def launch_setup(context, *args, **kwargs):
         robot_xacro_path, mappings={"hw_env": "gazebo"}
     ).toxml()
 
-    # Replace package:// URIs for all *_description packages
-    description_packages = ["d1_description", "d1h_description", "tita_description", "titatit_description"]
-    for desc_pkg in description_packages:
-        robot_description = robot_description.replace(
-            "package://" + desc_pkg,
-            "file://" + get_package_share_directory(desc_pkg),
-        )
+    robot_description = robot_description.replace(
+        "package://d1h_description",
+        "file://" + get_package_share_directory("d1h_description"),
+    )
 
     robot_description = robot_description.replace(
         get_package_share_directory("gazebo_bridge"),
@@ -127,8 +124,8 @@ def generate_launch_description():
     declared_arguments.append(
         launch.actions.DeclareLaunchArgument(
             "robot",
-            default_value="tita",
-            description="Path to the robot description file",
+            default_value="d1h",
+            description="Robot name (d1h)",
         )
     )
     declared_arguments.append(

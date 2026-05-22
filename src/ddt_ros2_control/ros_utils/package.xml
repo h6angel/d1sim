@@ -3,7 +3,7 @@
 <package format="3">
   <name>ros_utils</name>
   <version>0.0.1</version>
-  <description>tita bringup launch</description>
+  <description>ROS topic naming utilities</description>
   <maintainer email="jinxu.yu@directdrivetech.com">vulcan</maintainer>
   <maintainer email="liukexin@directdrivetech.com">lkx</maintainer>
   <license>Apache License 2.0</license>

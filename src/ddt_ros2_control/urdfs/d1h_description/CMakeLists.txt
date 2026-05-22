@@ -1,8 +1,7 @@
 cmake_minimum_required(VERSION 3.5)
 project(d1h_description)
-set(INSTALL_DIRS  
+set(INSTALL_DIRS
   meshes
-  mujoco
   urdf
   xacro
 )

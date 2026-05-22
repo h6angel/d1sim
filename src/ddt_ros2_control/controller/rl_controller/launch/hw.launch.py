@@ -94,8 +94,8 @@ def generate_launch_description():
     declared_arguments.append(
         DeclareLaunchArgument(
             "robot",
-            default_value="tita",
-            description="Path to the robot description file",
+            default_value="d1h",
+            description="Robot name (d1h)",
         )
     )
     # declared_arguments.append(
